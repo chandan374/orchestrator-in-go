@@ -95,3 +95,18 @@ func (w *Worker) StopTask(t task.Task) task.DockerResult {
 	return result
 }
 
+// GetTasks returns all tasks in the worker's database
+func (w *Worker) GetTasks() []*task.Task {
+	tasks := make([]*task.Task, 0)
+	for _, t := range w.Db {
+		tasks = append(tasks, t)
+	}
+	return tasks
+}
+
+// GetTask returns a specific task by ID
+func (w *Worker) GetTask(id uuid.UUID) (*task.Task, bool) {
+	t, exists := w.Db[id]
+	return t, exists
+}
+
